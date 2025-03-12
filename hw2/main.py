@@ -14,17 +14,18 @@ def generate_password():
     from 10 to 20 chars
     upper and lower case
     """
-    psw = []
-    length_psw = random.randint(10, 20)
-    counter = 0
-    while counter < length_psw:
-        psw.append(random.choice(string.ascii_lowercase))
-        psw.append(random.choice(string.ascii_uppercase))
-        psw.append(random.choice(string.digits))
-        psw.append(random.choice(string.punctuation))
-        counter += 1
-    random.shuffle(psw)
-    return ''.join(psw)
+    length_password = random.randint(10, 20)
+    password_chars = [
+        random.choice(string.ascii_uppercase),
+        random.choice(string.ascii_lowercase),
+        random.choice(string.digits),
+        random.choice(string.punctuation),
+    ]
+    all_chars = string.ascii_letters + string.digits + string.punctuation
+    for i in range(length_password - 4):
+        password_chars.append(random.choice(all_chars))
+    random.shuffle(password_chars)
+    return ''.join(password_chars)
 
 @app.route("/calculate_average")
 def calculate_average():
