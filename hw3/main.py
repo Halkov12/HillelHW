@@ -51,10 +51,6 @@ def get_bitcoin_value(currency, convert):
     if response.status_code != HTTPStatus.OK:
         return 'Something happened with https://bitpay.com/api'
 
-
-
-
-
     result = response.json()
     return f'{convert} Bitcoin is: {int(result['rate'] * convert)} {get_symbols(currency)} ({result['name']})'
 
