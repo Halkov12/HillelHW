@@ -8,7 +8,7 @@ import httpx
 from webargs import fields, validate
 from webargs.flaskparser import  use_kwargs
 
-from hw3.currency_symbols import currency_symbols
+from hw3.getsymbols import get_symbols
 from hw3.validator import generate_students_validator, bitcoin_value_validator
 
 app = Flask(__name__)
@@ -45,33 +45,18 @@ def generate_students(count):
     location="query",
 )
 def get_bitcoin_value(currency, convert):
-    # https://bitpay.com/api/rates
-    # /bitcoin_rate?currency=UAH&convert=100
-    # input parameter currency code
-    # default is USD
-    # default count is 1
-    # return value currency of bitcoin
-    # add one more input parameter count and multiply by currency (int)
-    # * https://bitpay.com/api/
-    # * Example: $, €, ₴
-    # * return symbol of input currency code
-
-    url = 'https://bitpay.com/api/rates'
-    response = requests.get(url)
+    url = 'https://bitpay.com/api/rates/'
+    response = requests.get(url + currency)
 
     if response.status_code != HTTPStatus.OK:
-        return 'Something happened with https://bitpay.com/api/rates '
-
-    data = response.json()
-    result = {}
-    for i in data:
-        if i['code'] == currency:
-            result = i
-
-    symbols = currency_symbols[result['code']]
-    return f'{convert} Bitcoin is: {int(result['rate'] * convert)}{symbols}  ({result['name']})'
+        return 'Something happened with https://bitpay.com/api'
 
 
+
+
+
+    result = response.json()
+    return f'{convert} Bitcoin is: {int(result['rate'] * convert)} {get_symbols(currency)} ({result['name']})'
 
 
 if __name__ == "__main__":
