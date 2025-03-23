@@ -18,24 +18,18 @@ def stats_by_city(genre):
         return 'You have not specified the genre.'
 
     query = """
-    SELECT customers.City, COUNT(invoices.InvoiceId) AS purchase_count
-    FROM customers
-    JOIN invoices ON customers.CustomerId = invoices.CustomerId
-    JOIN invoice_items ON invoices.InvoiceId = invoice_items.InvoiceId
-    JOIN tracks ON invoice_items.TrackId = tracks.TrackId
-    JOIN genres ON tracks.GenreId = genres.GenreId
-    WHERE genres.Name = ?
-    GROUP BY customers.City
-    ORDER BY purchase_count DESC
+    SELECT City, purchase_count 
+    FROM GenreStatsByCity
+    WHERE Genre = ? AND rank_position = 1;
     """
 
     cities = execute_query(query, (genre,))
 
-    if not cities:
-        return "No data available for this genre."
+    if cities:
+        return cities
+    else:
+        return 'No data available for this genre.'
 
-    city_list = [{"city": city[0], "purchase_count": city[1]} for city in cities]
-    return f'Most listened to {genre} in: {city_list[:2]}'
 
 
 if __name__ == "__main__":
