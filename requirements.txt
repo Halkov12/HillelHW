@@ -8,3 +8,4 @@ Faker~=37.0.0
 requests~=2.32.3
 webargs~=8.6.0
 httpx~=0.28.1
+colorama~=0.4.6
