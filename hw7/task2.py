@@ -1,35 +1,43 @@
 from colorama import Fore, init
 
-init(autoreset=True)
+class Colorizer:
+    COLORS = {
+        'red': Fore.RED,
+        'green': Fore.GREEN,
+        'blue': Fore.BLUE,
+        'yellow': Fore.YELLOW,
+        'cyan': Fore.CYAN,
+        'magenta': Fore.MAGENTA,
+        'white': Fore.WHITE
+    }
 
-
-class colorizer:
     def __init__(self, color):
-        self.color = color
+        self.color_code = self.COLORS.get(color, Fore.WHITE)
 
     def __enter__(self):
-        if self.color == 'red':
-            self.color_code = Fore.RED
-        elif self.color == 'green':
-            self.color_code = Fore.GREEN
-        elif self.color == 'blue':
-            self.color_code = Fore.BLUE
-        else:
-            self.color_code = Fore.WHITE
-        return self.color_code
+        print(self.color_code, end="")
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+        print(Fore.RESET, end="")
 
 
-with colorizer('red') as c:
-    print(f'{c}printed in red')
+with Colorizer('red'):
+    print("Printed in red")
 
-with colorizer('green') as c:
-    print(f'{c}printed in green')
+with Colorizer('green'):
+    print("Printed in green")
 
-with colorizer('blue') as c:
-    print(f'{c}printed in blue')
+with Colorizer('blue'):
+    print("Printed in blue")
 
+with Colorizer('yellow'):
+    print("Printed in yellow")
 
-print('printed in default')
+with Colorizer('cyan'):
+    print("Printed in cyan")
+
+with Colorizer('magenta'):
+    print("Printed in magenta")
+
+print("Printed in default")
