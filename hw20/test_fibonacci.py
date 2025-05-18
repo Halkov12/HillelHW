@@ -39,10 +39,18 @@ class TestFibonacci(unittest.TestCase):
         result = self.fib(30)
         self.assertEqual(result, 832040)
 
-    def test_invalid_inputs(self):
+    def test_larger_number(self):
+        result = self.fib(50)
+        self.assertEqual(result, 12586269025)
+
+    def test_negative_input(self):
         with self.assertRaises(ValueError):
             self.fib(-1)
+
+    def test_float_input(self):
         with self.assertRaises(ValueError):
             self.fib(3.5)
+
+    def test_string_input(self):
         with self.assertRaises(ValueError):
             self.fib("5")

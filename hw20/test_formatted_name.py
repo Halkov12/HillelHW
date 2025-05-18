@@ -24,3 +24,15 @@ class TestFormattedName(unittest.TestCase):
         result = formatted_name('FIRSTNAME', 'LASTNAME', 'MIDDLENAME')
         self.assertEqual(result, 'Firstname Middlename Lastname')
 
+    def test_empty_values(self):
+        result = formatted_name('', '')
+        self.assertEqual(result, '')
+
+        result = formatted_name('', 'lastname')
+        self.assertEqual(result, 'Lastname')
+
+        result = formatted_name('firstname', '')
+        self.assertEqual(result, 'Firstname')
+
+        result = formatted_name('', 'lastname', '')
+        self.assertEqual(result, 'Lastname')
