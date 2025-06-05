@@ -1,20 +1,21 @@
-import requests
+import random
+import nltk
+from nltk.corpus import brown
 
-def random_words_generator(count: int):
-    if count > 10000:
-        return print('Maximum 10000 words')
-    else:
-        url = f'https://random-word-api.herokuapp.com/word?number={count}'
-        response = requests.get(url)
-        if response.status_code == 200:
-            words = response.json()
-            return words
-        else:
-            raise Exception(f"Error fetching words: {response.status_code}")
+nltk.download('brown')
 
 
+def frequent_words_generator(n):
+    if not (1 <= n <= 10000):
+        raise ValueError("n must be between 1 and 10_000")
 
-print(random_words_generator(10000))
+    words = [w.lower() for w in brown.words() if w.isalpha()]
+    unique_words = list(set(words))
 
-for word in random_words_generator(10000):
+    sampled_words = random.sample(unique_words, n)
+    for i in sampled_words:
+        yield i
+
+
+for word in frequent_words_generator(1000):
     print(word)
