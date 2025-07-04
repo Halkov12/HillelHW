@@ -5,7 +5,7 @@ async def producer(queue):
         item = f'data-{i}'
         print(f'[Producer] Produced {item}')
         await queue.put(item)
-    await queue.put(None)  # сигнал конца
+    await queue.put(None)
 
 async def consumer(queue, processed, event):
     while True:
